@@ -2,6 +2,7 @@ import { BaseController } from "../common/base.controller";
 import { LoggerService } from "../logger/logger.service";
 import { Request, Response, NextFunction } from "express";
 import { IControllerRoute } from "../common/route.interface";
+import { HTTPError } from "../errors/http-error.class";
 
 export class UserController extends BaseController {
 
@@ -13,13 +14,11 @@ export class UserController extends BaseController {
     }
 
     login(req: Request, res: Response, next: NextFunction) {
-        this.ok(res, "login")
-        next();
+        next(new HTTPError(401, "Not authorized", "Authentication error"))
     }
 
     register(req: Request, res: Response, next: NextFunction) {
         this.ok(res, "register")
-        next();
     }
 
 
