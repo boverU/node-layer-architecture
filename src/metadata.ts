@@ -10,7 +10,7 @@ function Injectable(key: string) {
 
 
 function Prop(target: Object, name: string) {
-
+    console.log(name)
 }
 
 @Injectable("C")
