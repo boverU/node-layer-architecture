@@ -6,13 +6,14 @@ import { ILogger } from "./logger/logger.interface";
 import { TYPES } from "./types";
 import { UserController } from "./users/users.controller";
 import "reflect-metadata"
+import { IUserController } from "./users/users.controller.interface";
 @injectable()
 export class App {
     app: Express;
     server: Server;
     port: number;
     constructor(@inject(TYPES.ILogger) private logger: ILogger,
-        @inject(TYPES.UserController) private userController: UserController,
+        @inject(TYPES.IUserController) private userController: UserController,
         @inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter) {
         this.app = express();
         this.port = 8000;
