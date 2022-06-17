@@ -31,5 +31,9 @@
                 "endOfLine": "auto"
             }
         ]
-    }
+    },
+    "ignorePatterns": [
+        "/src/test.ts",
+        "/src/metadata.ts"
+    ]
 }

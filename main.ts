@@ -7,6 +7,11 @@ import { LoggerService } from "./src/logger/logger.service";
 import { TYPES } from "./src/types";
 import { UserController } from "./src/users/users.controller";
 
+export interface BootstrapReturnType {
+    appContainer: Container, 
+    app: App
+}
+
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
     bind<ILogger>(TYPES.ILogger).to(LoggerService);
     bind<IExceptionFilter>(TYPES.IExceptionFilter).to(ExceptionFilter);
