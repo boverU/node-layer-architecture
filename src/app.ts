@@ -7,6 +7,7 @@ import { TYPES } from './types';
 import { UserController } from './users/users.controller';
 import 'reflect-metadata';
 import { json } from 'body-parser';
+import { IConfigService } from './config/config.service.interface';
 @injectable()
 export class App {
 	app: Express;
@@ -16,6 +17,7 @@ export class App {
 		@inject(TYPES.ILogger) private logger: ILogger,
 		@inject(TYPES.IUserController) private userController: UserController,
 		@inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
 	) {
 		this.app = express();
 		this.port = 8000;
