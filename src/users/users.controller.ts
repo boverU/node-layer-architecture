@@ -9,10 +9,14 @@ import { IUserController } from './users.controller.interface';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { User } from './user.entity';
+import { UserService } from './users.service';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
-	constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
+	constructor(
+		@inject(TYPES.ILogger) private loggerService: ILogger,
+		@inject(TYPES.UserService) private userService: UserService,
+	) {
 		super(loggerService);
 		this.bindRoutes([
 			{ path: '/register', method: 'post', func: this.register },
@@ -30,8 +34,10 @@ export class UserController extends BaseController implements IUserController {
 		res: Response,
 		next: NextFunction,
 	): Promise<void> {
-		const newUser = new User(req.body.email, req.body.name);
-		await newUser.setPassword(req.body.password);
-		this.ok(res, newUser);
+		const result = await this.userService.createUser(req.body);
+		if (!result) {
+			return next(new HTTPError(422, 'Such user already exists', 'Existing user error'));
+		}
+		this.ok(res, { email: result.email });
 	}
 }
