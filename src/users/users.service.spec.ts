@@ -15,6 +15,7 @@ const ConfigServiceMock: IConfigService = {
 const UsersRepositoryMock: IUsersRepository = {
 	find: jest.fn(),
 	create: jest.fn(),
+	findAll: jest.fn(),
 };
 
 const container = new Container();

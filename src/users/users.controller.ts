@@ -42,6 +42,8 @@ export class UserController extends BaseController implements IUserController {
 				func: this.info,
 				middlewares: [new AuthGuard()],
 			},
+
+			{ path: '/getAll', method: 'get', func: this.getAllUsers, middlewares: [new AuthGuard()] },
 		]);
 	}
 
@@ -97,5 +99,14 @@ export class UserController extends BaseController implements IUserController {
 				},
 			);
 		});
+	}
+
+	async getAllUsers(
+		req: Request<{}, {}, UserRegisterDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const result = await this.userService.getAllUsers();
+		this.ok(res, result);
 	}
 }
