@@ -28,6 +28,8 @@ export class UsersRepository implements IUsersRepository {
 	}
 
 	async findAll(): Promise<UserModel[] | null> {
-		return await this.prismaService.client.userModel.findMany();
+		return await this.prismaService.client.userModel.findMany({
+			include: {todos: true}
+		});
 	}
 }

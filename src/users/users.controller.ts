@@ -107,6 +107,6 @@ export class UserController extends BaseController implements IUserController {
 		next: NextFunction,
 	): Promise<void> {
 		const result = await this.userService.getAllUsers();
-		this.ok(res, result);
+		this.ok(res, result?.map(user=>({email: user.email, id: user.id, name: user.name})));
 	}
 }

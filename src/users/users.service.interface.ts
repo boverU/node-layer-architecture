@@ -1,6 +1,10 @@
-import { UserModel } from '@prisma/client';
+import { UserModel, ToDo } from '@prisma/client';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
+
+interface UserWithTodos extends UserModel{
+	todos: Array<ToDo>
+}
 
 export interface IUserService {
 	createUser: (dto: UserRegisterDto) => Promise<UserModel | null>;
