@@ -8,14 +8,18 @@ import 'reflect-metadata';
 import { IUserController } from './users.controller.interface';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { UserService } from './users.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
+
+import { sign } from 'jsonwebtoken';
+import { ConfigService } from '../config/config.service';
+import { IUserService } from './users.service.interface';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
 	constructor(
 		@inject(TYPES.ILogger) private loggerService: ILogger,
-		@inject(TYPES.UserService) private userService: UserService,
+		@inject(TYPES.UserService) private userService: IUserService,
+		@inject(TYPES.ConfigService) private configService: ConfigService,
 	) {
 		super(loggerService);
 		this.bindRoutes([
@@ -31,6 +35,11 @@ export class UserController extends BaseController implements IUserController {
 				func: this.login,
 				middlewares: [new ValidateMiddleware(UserLoginDto)],
 			},
+			{
+				path: '/info',
+				method: 'get',
+				func: this.info,
+			},
 		]);
 	}
 
@@ -41,7 +50,8 @@ export class UserController extends BaseController implements IUserController {
 	): Promise<void> {
 		const result = await this.userService.validateUser(req.body);
 		if (result) {
-			this.ok(res, 'User successfully logged in');
+			const jwt = await this.signJWT(req.body.email, this.configService.get('SECRET'));
+			this.ok(res, { jwt });
 		} else {
 			next(new HTTPError(401, 'Not authorized', 'Authentication error'));
 		}
@@ -57,5 +67,32 @@ export class UserController extends BaseController implements IUserController {
 			return next(new HTTPError(422, 'Such user already exists', 'Existing user error'));
 		}
 		this.ok(res, { email: result.email, id: result.id });
+	}
+
+	async info(
+		{ user }: Request<{}, {}, UserRegisterDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		this.ok(res, { email: user });
+	}
+
+	private signJWT(email: string, secret: string): Promise<string> {
+		return new Promise<string>((resolve, reject) => {
+			sign(
+				{
+					email,
+					iat: Math.floor(Date.now() / 1000),
+				},
+				secret,
+				{ algorithm: 'HS256' },
+				(err, token) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(token as string);
+				},
+			);
+		});
 	}
 }
