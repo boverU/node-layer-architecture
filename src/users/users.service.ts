@@ -33,7 +33,7 @@ export class UserService implements IUserService {
 			return false;
 		}
 		const user = new User(foundUser.email, foundUser.name, foundUser.password);
-		return await user.passwordCompare(password);
+		return user.passwordCompare(password);
 	}
 
 	async getUserInfo(email: string): Promise<UserModel | null> {
