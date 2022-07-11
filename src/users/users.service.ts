@@ -6,7 +6,7 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { User } from './user.entity';
 import { IUsersRepository } from './user.repository.interface';
-import { IUserService } from './users.service.interface';
+import { IUserService, UserWithTodos } from './users.service.interface';
 
 @injectable()
 export class UserService implements IUserService {
@@ -39,7 +39,7 @@ export class UserService implements IUserService {
 	async getUserInfo(email: string): Promise<UserModel | null> {
 		return this.usersRepository.find(email);
 	}
-	async getAllUsers(): Promise<UserModel[] | null> {
+	async getAllUsers(): Promise<UserWithTodos[] | null> {
 		return this.usersRepository.findAll();
 	}
 }
