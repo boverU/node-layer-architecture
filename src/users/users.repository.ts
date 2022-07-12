@@ -4,7 +4,6 @@ import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../types';
 import { User } from './user.entity';
 import { IUsersRepository } from './user.repository.interface';
-import { UserWithTodos } from './users.service.interface';
 
 @injectable()
 export class UsersRepository implements IUsersRepository {
@@ -28,9 +27,7 @@ export class UsersRepository implements IUsersRepository {
 		});
 	}
 
-	async findAll(): Promise<UserWithTodos[] | null> {
-		return await this.prismaService.client.userModel.findMany({
-			include: { todos: true },
-		});
+	async findAll(): Promise<UserModel[] | null> {
+		return await this.prismaService.client.userModel.findMany();
 	}
 }
