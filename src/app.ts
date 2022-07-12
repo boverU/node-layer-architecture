@@ -10,6 +10,8 @@ import { json } from 'body-parser';
 import { IConfigService } from './config/config.service.interface';
 import { PrismaService } from './database/prisma.service';
 import { AuthMiddleware } from './common/auth.middleware';
+import { ITodosController } from './todos/todos.controller.interface';
+import { TodosController } from './todos/todos.controller';
 @injectable()
 export class App {
 	app: Express;
@@ -21,6 +23,7 @@ export class App {
 		@inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.PrismaService) private prismaService: PrismaService,
+		@inject(TYPES.ITodosController) private todosController: TodosController
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -34,6 +37,7 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/users', this.userController.router);
+		this.app.use('/todos', this.todosController.router);
 	}
 
 	useExceptionFilters(): void {

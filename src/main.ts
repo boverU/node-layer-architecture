@@ -7,6 +7,12 @@ import { ExceptionFilter } from './errors/exception.filter';
 import { IExceptionFilter } from './errors/exception.filter.interface';
 import { ILogger } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
+import { TodosController } from './todos/todos.controller';
+import { ITodosController } from './todos/todos.controller.interface';
+import { TodosRepository } from './todos/todos.repository';
+import { ITodosRepository } from './todos/todos.repository.interface';
+import { TodosService } from './todos/todos.service';
+import { ITodosService } from './todos/todos.service.interface';
 import { TYPES } from './types';
 import { IUsersRepository } from './users/user.repository.interface';
 import { UserController } from './users/users.controller';
@@ -28,6 +34,9 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
 	bind<IUsersRepository>(TYPES.IUsersRepository).to(UsersRepository).inSingletonScope();
+	bind<ITodosRepository>(TYPES.ITodosRepository).to(TodosRepository).inSingletonScope();
+	bind<ITodosService>(TYPES.ITodosService).to(TodosService).inSingletonScope();
+	bind<ITodosController>(TYPES.ITodosController).to(TodosController).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 
