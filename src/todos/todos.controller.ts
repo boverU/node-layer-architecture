@@ -1,3 +1,4 @@
+import { ToDo } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 import { BaseController } from "../common/base.controller";
@@ -29,7 +30,12 @@ export class TodosController extends BaseController implements ITodosController{
 		res: Response,
 		next: NextFunction,
 	): Promise<void> {
-		const createdUser = await this.todosService.createTodo(req.body);
-		this.ok(res, createdUser);
+        try {
+            const createdTodo = await this.todosService.createTodo(req.body);
+            this.created(res)    
+        } catch (error) {
+            next()
+        }
+		
 	}
 } 

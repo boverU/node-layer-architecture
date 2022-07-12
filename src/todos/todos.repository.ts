@@ -3,7 +3,6 @@ import { inject, injectable } from 'inversify';
 import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../types';
 import { TodoCreateDto } from './dto/Todo.dto';
-import { Todo } from './todo.entity';
 import { ITodosRepository } from './todos.repository.interface';
 
 @injectable()

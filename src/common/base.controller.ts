@@ -28,7 +28,7 @@ export abstract class BaseController {
 	}
 
 	public created(res: Response): Response<any, Record<string, any>> {
-		return res.sendStatus(201);
+		return res.sendStatus(201).send(res);
 	}
 
 	protected bindRoutes(routes: IControllerRoute[]): void {

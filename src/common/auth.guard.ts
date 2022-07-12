@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 import { IMiddleWare } from './middleware.interface';
 
 export class AuthGuard implements IMiddleWare {
