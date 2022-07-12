@@ -5,13 +5,13 @@ export const TYPES = {
 	ConfigService: Symbol.for('ConfigService'),
 	IExceptionFilter: Symbol.for('IExceptionFilter'),
 
-	// Controllers 
+	// Controllers
 	IUserController: Symbol.for('IUserController'),
 	ITodosController: Symbol.for('ITodosController'),
 	// Services
 	UserService: Symbol.for('UserService'),
-	ITodosService: Symbol.for("ITodosService"),
+	ITodosService: Symbol.for('ITodosService'),
 	// Repositories
 	IUsersRepository: Symbol.for('IUserRepository'),
-	ITodosRepository: Symbol.for("ITodosRepository")
+	ITodosRepository: Symbol.for('ITodosRepository'),
 };

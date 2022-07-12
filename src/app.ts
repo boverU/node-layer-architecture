@@ -23,7 +23,7 @@ export class App {
 		@inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.PrismaService) private prismaService: PrismaService,
-		@inject(TYPES.ITodosController) private todosController: TodosController
+		@inject(TYPES.ITodosController) private todosController: TodosController,
 	) {
 		this.app = express();
 		this.port = 8000;

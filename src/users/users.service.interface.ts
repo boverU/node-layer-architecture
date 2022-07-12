@@ -7,4 +7,5 @@ export interface IUserService {
 	validateUser: (dto: UserLoginDto) => Promise<boolean>;
 	getUserInfo: (email: string) => Promise<UserModel | null>;
 	getAllUsers: () => Promise<UserModel[] | null>;
+	getUserById: (userId: number) => Promise<UserModel | null>;
 }

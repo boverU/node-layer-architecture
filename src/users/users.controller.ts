@@ -43,6 +43,13 @@ export class UserController extends BaseController implements IUserController {
 				middlewares: [new AuthGuard()],
 			},
 
+			{
+				path: '/:id',
+				method: 'get',
+				func: this.getUserById,
+				middlewares: [new AuthGuard()],
+			},
+
 			{ path: '/allUsers', method: 'get', func: this.getAllUsers, middlewares: [new AuthGuard()] },
 		]);
 	}
@@ -107,6 +114,12 @@ export class UserController extends BaseController implements IUserController {
 		next: NextFunction,
 	): Promise<void> {
 		const result = await this.userService.getAllUsers();
+		this.ok(res, result);
+	}
+
+	async getUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const id = req.params.id;
+		const result = await this.userService.getUserById(Number(id));
 		this.ok(res, result);
 	}
 }

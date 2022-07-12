@@ -9,11 +9,13 @@ import { ITodosRepository } from './todos.repository.interface';
 export class TodosRepository implements ITodosRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async createTodo({ description, completed, userId}: TodoCreateDto): Promise<ToDo> {
+	async createTodo({ description, completed, userId }: TodoCreateDto): Promise<ToDo> {
 		return await this.prismaService.client.toDo.create({
-            data:{
-                description, completed, userId
-            }
-        })
+			data: {
+				description,
+				completed,
+				userId,
+			},
+		});
 	}
 }

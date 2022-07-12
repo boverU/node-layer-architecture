@@ -23,13 +23,21 @@ export class UsersRepository implements IUsersRepository {
 		return await this.prismaService.client.userModel.findUnique({
 			where: {
 				email,
-			}
+			},
 		});
 	}
 
 	async findAll(): Promise<UserModel[] | null> {
 		return await this.prismaService.client.userModel.findMany({
-			include: {todos: true}
+			include: { todos: true },
+		});
+	}
+
+	async getUserById(userId: number): Promise<UserModel | null> {
+		return await this.prismaService.client.userModel.findUnique({
+			where: {
+				id: userId,
+			},
 		});
 	}
 }

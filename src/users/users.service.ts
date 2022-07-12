@@ -42,4 +42,12 @@ export class UserService implements IUserService {
 	async getAllUsers(): Promise<UserModel[] | null> {
 		return this.usersRepository.findAll();
 	}
+
+	async getUserById(userId: number): Promise<UserModel | null> {
+		const user = this.usersRepository.getUserById(userId);
+		if (user) {
+			return user;
+		}
+		return null;
+	}
 }
